@@ -56,11 +56,67 @@ const getStatus = (userId) => {
     });
 };
 
-getStatus(123).then((status) => {
+const getStatusAlt = async (userId) => {
+    // throw new Error('This is an error to trigger reject');
+    // return 'Mike';
+    const user = await getUser(userId);
+    const grades = await getGrades(user.schoolId);
+
+    let average = 0;
+
+    if (grades.length > 0) {
+        average = grades.map((grade) => grade.grade).reduce((a, b) => a + b) / grades.length;
+    }
+
+    return `${user.name} has a ${average}% in the class.`
+};
+
+getStatusAlt(2).then((status) => {
     console.log(status);
 }).catch((e) => {
     console.log(e);
 });
+
+/*********** begin comments on async await 
+// especial type of function that uses these keywords to AWAYS return a Promise. The functions below are alike:
+const getStatusUsual = (userId) => {
+    return 'Mike';
+};
+const getStatusAlt = async (userId) => {
+    return 'Mike';
+};
+() => {
+    return new Promise((resolve, reject) => {
+        resolve('Mike');
+    });
+}
+console.log(getStatusUsual());
+console.log(getStatusAlt());
+
+*********** end on comments Async Await*/
+// const getStatusAlt = async (userId) => {
+//     const user = await getUser(userId);
+//     const grades = await getGrades(user.schoolId);
+//     let average = 0;
+  
+//     if (grades.length > 0) {
+//       average = grades.map((grade) => grade.grade).reduce((a, b) => a + b) / grades.length;
+//     } 
+  
+//     return `${user.name} has a ${average}% in the class.`;
+//   };
+
+// getStatusAlt(1).then((status) => {
+//     console.log(status);
+// }).catch((e) => {
+//     console.log(e);
+// });
+
+// getStatus(123).then((status) => {
+//     console.log(status);
+// }).catch((e) => {
+//     console.log(e);
+// });
 
 // getGrades(999).then((grades) => {
 //     console.log(grades);
